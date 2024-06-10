@@ -113,6 +113,7 @@ public class TaskScript : MonoBehaviour
     // Method to show the next task
     public void ShowNextTask()
     {
+        
         List<int> incompleteTaskIndices = completedTasks
             .Select((completed, index) => new { completed, index })
             .Where(x => !x.completed)
@@ -136,18 +137,19 @@ public class TaskScript : MonoBehaviour
         taskText.gameObject.SetActive(true);
 
         // Show or hide buttons based on the selected task
-        if (taskText.text == "Выполните замену блока питания")
+        if (taskText.text.Contains("Выполните замену блока питания"))
         {
+            Debug.Log("Текущее задание: " + taskText.text);
             powerOffButton.gameObject.SetActive(true);
             replacePowerBlockButton.gameObject.SetActive(true);
         }
-        else if (taskText.text == "Выполните повторную калибровку платформы")
+        else if (taskText.text.Contains("Выполните повторную калибровку платформы"))
         {
             calibrateButton.gameObject.SetActive(true);
             powerOffButton.gameObject.SetActive(false);
             replacePowerBlockButton.gameObject.SetActive(false);
         }
-        else if (taskText.text == "Измените управляющие параметры скорости печати")
+        else if (taskText.text.Contains ("Измените управляющие параметры скорости печати"))
         {
             speedDropdown.gameObject.SetActive(true);
             applyChangesButton.gameObject.SetActive(true);
