@@ -34,7 +34,25 @@ public class ResultScript : MonoBehaviour
         // Получить затраченное время
         float elapsedTime = timerScript.timeStart;
 
+        // Подсчитать баллы на основе времени и количества заданий
+        int score = CalculateScore(completedTasksCount, elapsedTime);
+
         // Отобразить результаты
-        resultText.text = $"Устранено неполадок: {completedTasksCount}\nЗатраченное время: {elapsedTime:F2} секунд";
+        resultText.text = $"Устранено неполадок: {completedTasksCount}\nЗатраченное время: {elapsedTime:F2} секунд\nБаллы: {score}";
+    }
+
+    // Метод для расчета баллов
+    private int CalculateScore(int completedTasksCount, float elapsedTime)
+    {
+        // Предположим, что за каждую устраненную неполадку даётся 10 баллов, 
+        // а за каждую секунду, которую удалось сэкономить, даётся 5 баллов.
+        int taskScore = completedTasksCount * 10;
+        int timeScore = Mathf.RoundToInt((100 - elapsedTime) * 5); // 100 - elapsedTime - чтобы чем быстрее, тем больше баллов
+
+        // Суммируем баллы
+        int totalScore = taskScore + timeScore;
+
+        // Минимальное количество баллов за работу - 0
+        return Mathf.Max(totalScore, 0);
     }
 }
